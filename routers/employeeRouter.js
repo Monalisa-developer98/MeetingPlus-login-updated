@@ -13,6 +13,11 @@ router.get("/viewSingleEmployee/:id", validator.viewSingleEmployeeValidator,
     employeeController.viewSingleEmployee
 );
 
+/* VIEW EMPLOYEE  */
+router.post("/listEmployee", validator.listEmployesValidator, authMiddleware.verifyUserToken,
+    employeeController.listEmployee
+);
+
 /* DEACTIVATE EMPLOYEE  */
 router.put("/deactivateEmployee/:id", validator.deactivateEmployeValidator, employeeController.deactivateEmployee);
 /* DELETE EMPLOYEE  */

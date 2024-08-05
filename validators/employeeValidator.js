@@ -151,6 +151,33 @@ const loginOtpSchema = async(req, res, next) => {
   }
 }
 
+//LSIT EMPLOYEE VALIDATOR
+const listEmployesValidator = async (req, res, next) => {
+  try {
+    const bodySchema = Joi.object({
+      searchKey: Joi.string()
+        .trim()
+        .pattern(/^[0-9a-zA-Z ,/-]+$/)
+        .messages({
+          "string.pattern.base": `HTML tags & Special letters are not allowed!`,
+        }),
+    });
+    const paramsSchema = Joi.object({
+      limit: Joi.number(),
+      page: Joi.number(),
+      order: Joi.number(),
+    });
+    await bodySchema.validateAsync(req.body);
+    await paramsSchema.validateAsync(req.query);
+
+    next();
+  } catch (error) {
+    console.log(error);
+    errorLog(error);
+    return Responses.errorResponse(req, res, error, 200);
+  }
+};
+
 module.exports = {
     createEmployeeValidator,
     editEmployeeValidator,
@@ -159,5 +186,6 @@ module.exports = {
     deleteEmployeValidator,
     loginSchema,
     sendOtpSchema,
-    loginOtpSchema
+    loginOtpSchema,
+    listEmployesValidator
 }

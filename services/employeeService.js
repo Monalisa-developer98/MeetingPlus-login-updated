@@ -59,6 +59,39 @@ const verifyEmployee = async (email) => {
     );
 };
 
+/**FUNC- TO SEE LIST OF EMPLOYEE */
+const listEmployee = async (bodyData, queryData) => {
+    const { order } = queryData;
+    const { searchKey } = bodyData;
+  
+    let query = searchKey 
+        ? {
+            $and: [
+                {
+                    $or: [
+                        { name: { $regex: searchKey, $options: "i" } },
+                        { email: { $regex: searchKey, $options: "i" } },
+                    ],
+                },
+                {
+                    isActive: true,
+                },
+            ],
+        }
+        : { isActive: true };
+  
+    const limit = queryData.limit ? parseInt(queryData.limit) : 0;
+    const skip = queryData.page ? (parseInt(queryData.page) - 1) * limit : 0;
+  
+    const totalCount = await Employee.countDocuments(query);
+    const employeeData = await Employee.find(query).sort({ _id: parseInt(order) }).skip(skip).limit(limit);
+
+    console.log("EMp data--&**&", employeeData);
+  
+    return { totalCount, employeeData };
+};
+
+
 /**FUNC- EDIT EMPLOYEE */
 const editEmployee = async (id, data) => {
     console.log("Data received for update:", data);
@@ -185,5 +218,6 @@ module.exports = {
     deleteEmployee,
     loginEmployee,
     sendOtp,
-    loginWithOtp
+    loginWithOtp,
+    listEmployee
 }
