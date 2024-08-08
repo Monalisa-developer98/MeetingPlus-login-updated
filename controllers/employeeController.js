@@ -89,14 +89,17 @@ const deleteEmployee = async(req, res) =>{
 /**FUNC- TO LOGIN EMPLOYEE **/
 const loginEmployee = async (req, res) => {
   try {
-      const result = await employeeService.loginEmployee(req.body);
-      if (!result.success) {
-          return Responses.failResponse(req, res, null, messages.recordsNotFound, 200);
-      }
-      const token = await authMiddleware.generateUserToken({ email: req.body.email });
-      return Responses.successResponse(req, res, { employee: result.employee, token }, messages.loginSuccess, 200);
+    const result = await employeeService.loginEmployee(req.body);
+    if (!result.success) {
+      return Responses.failResponse(req, res, null, messages.recordsNotFound, 200);
+    }
+
+    const employee = result.employee;
+    const token = await authMiddleware.generateUserToken({ email: employee.email, role: employee.role });
+
+    return Responses.successResponse(req, res, { employee, token }, messages.loginSuccess, 200);
   } catch (error) {
-      return Responses.errorResponse(req, res, error);
+    return Responses.errorResponse(req, res, error);
   }
 };
 

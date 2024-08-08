@@ -5,13 +5,12 @@ const employeeService = require("../services/employeeService");
 
 /*FUNC TO GENERATE NEW TOKEN FOR USER*/
 const generateUserToken = async (data) => {
-  // Ensure that 'data' is a plain object
   if (typeof data !== 'object' || data === null) {
     throw new Error('Data must be a plain object');
   }
-  
-  const token = jwt.sign(data, process.env.JWT_USER_SECRET, {   // generate token
-    expiresIn: "365d", // 365 days
+
+  const token = jwt.sign(data, process.env.JWT_USER_SECRET, {
+    expiresIn: '365d',
   });
   return `Bearer ${token}`;
 };
@@ -25,7 +24,7 @@ const verifyUserToken = async (req, res, next) => {
       token = token.substring(7, token.length);
     }
     const decoded = jwt.verify(token, process.env.JWT_USER_SECRET);
-    console.log(decoded);
+    console.log("Decoded------------", decoded);
     const email = decoded.email;
     const isActiveUser = await employeeService.verifyEmployee(email);
     console.log("isActiveUser------", isActiveUser);

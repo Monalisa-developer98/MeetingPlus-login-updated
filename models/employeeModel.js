@@ -26,6 +26,19 @@ const employeeSchema = new mongoose.Schema({
         type: String
     },
     otpExpiry: { type: Date },
+    designation: {
+        type: String,
+        default: null,
+    },
+    department: {
+        type: String,
+        default: null,
+    },
+    role: {
+        type: String,
+        enum: ['USER', 'ADMIN'],
+        default: 'USER'
+    },
     isActive: {
         type: Boolean,
         default: true,

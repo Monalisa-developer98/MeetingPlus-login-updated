@@ -23,7 +23,10 @@ const createEmployee = async(data) => {
         const inputData = {
             name: data.name,
             email: data.email,
-            password: hashedPassword
+            password: hashedPassword,
+            role: data.role,
+            designation: data.designation,
+            department: data.department
         }
         const empData = new Employee(inputData);
         const result = await empData.save();
@@ -54,6 +57,7 @@ const verifyEmployee = async (email) => {
         _id: 1,
         email: 1,
         name: 1,
+        role: 1,
         isActive: 1,
       }
     );

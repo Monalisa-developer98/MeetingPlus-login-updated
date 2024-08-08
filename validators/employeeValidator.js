@@ -16,7 +16,10 @@ const createEmployeeValidator = async (req, res, next) => {
             'string.min': 'Password should have a minimum length of {#limit}',
             'string.empty': 'Password cannot be an empty field',
             'any.required': 'Password is a required field'
-        })       
+        }) ,
+        role: Joi.string(),
+        designation: Joi.string(),
+        department: Joi.string()     
       });
       console.log("bodySchema--", bodySchema);
       await bodySchema.validateAsync(req.body);
@@ -114,7 +117,8 @@ const loginSchema = async (req, res, next) => {
           'string.min': 'Password should have a minimum length of {#limit}',
           'string.empty': 'Password cannot be an empty field',
           'any.required': 'Password is a required field'
-      })       
+      }),
+      role: Joi.string()       
     });
     await bodySchema.validateAsync(req.body);
     next();
