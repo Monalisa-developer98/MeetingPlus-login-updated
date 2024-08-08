@@ -14,7 +14,7 @@ router.get("/viewSingleEmployee/:id", validator.viewSingleEmployeeValidator,
 );
 
 /* VIEW EMPLOYEE  */
-router.post("/listEmployee", employeeController.listEmployee);
+router.post("/listEmployee", authMiddleware.verifyUserToken, employeeController.listEmployee);
 
 /* DEACTIVATE EMPLOYEE  */
 router.put("/deactivateEmployee/:id", validator.deactivateEmployeValidator, employeeController.deactivateEmployee);
