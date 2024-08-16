@@ -8,7 +8,8 @@ const createEmployee = async (req, res) => {
     try {
       const result = await employeeService.createEmployee(req.body);
       console.log(result);
-      if (result?.isDuplicateEmail) {
+      // optional chaining --- it will check, if the user property has isDuplicateEmail property
+      if (result?.isDuplicateEmail) { // instead of causing an error if a reference is nullish (null or undefined), the expression short-circuits with a return value of undefined
         return Responses.failResponse(req, res, null, messages.duplicateEmail, 200);
       }
   
