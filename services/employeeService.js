@@ -8,7 +8,7 @@ const { generetHashPassword, verifyPassword } = require('../helpers/commonHelper
 // create Employee
 const createEmployee = async(data) => {
     console.log("----------3333", data);
-    const emailDetails = await checkDuplicateEmail(data.name);
+    const emailDetails = await checkDuplicateEmail(data.email);
     console.log("Email Details", emailDetails);
 
     if (emailDetails){
