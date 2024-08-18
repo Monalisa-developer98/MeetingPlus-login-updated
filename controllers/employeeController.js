@@ -13,7 +13,7 @@ const createEmployee = async (req, res) => {
         return Responses.failResponse(req, res, null, messages.duplicateEmail, 200);
       }
   
-      return Responses.successResponse(req, res, result.data, messages.createdSuccess, 201 );
+      return Responses.successResponse(req, res, result, messages.createdSuccess, 201 );
     } catch (error) {
       console.log(error);
       return Responses.errorResponse(req, res, error);
