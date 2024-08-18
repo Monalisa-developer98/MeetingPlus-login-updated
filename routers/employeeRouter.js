@@ -25,7 +25,7 @@ router.delete("/deleteEmployee/:id", validator.deleteEmployeValidator, employeeC
 router.post('/login', validator.loginSchema, employeeController.loginEmployee);
 
 router.post('/send-otp', validator.sendOtpSchema, employeeController.sendOtpToEmployee);
-
+// login with otp
 router.post('/login/otp', validator.loginOtpSchema, employeeController.loginWithOtp);
 
 module.exports = router;
